@@ -1,0 +1,508 @@
+[retirement_rolling.html](https://github.com/user-attachments/files/28421024/retirement_rolling.html)
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김상윤 실장님 퇴임 기념</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --warm-100: #FDF6EE;
+    --warm-200: #FAF0E8;
+    --warm-300: #F5E4D0;
+    --warm-400: #D4A070;
+    --warm-500: #B8825A;
+    --warm-600: #7A4F2C;
+    --text-primary: #2C2018;
+    --text-secondary: #7A6555;
+    --text-muted: #A89585;
+    --border: rgba(180,140,100,0.2);
+    --border-hover: rgba(180,140,100,0.4);
+    --white: #FFFFFF;
+    --shadow: 0 2px 16px rgba(120,80,40,0.08);
+    --shadow-hover: 0 4px 24px rgba(120,80,40,0.14);
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--warm-100);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(212,160,112,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-petal {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--warm-300);
+    color: var(--warm-600);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(24px, 5vw, 34px);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .hero .subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .hero-divider {
+    width: 48px; height: 1.5px;
+    background: var(--warm-400);
+    margin: 1.8rem auto 0;
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .tabs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .tab {
+    font-size: 12px;
+    font-weight: 400;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-hover);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .tab:hover { background: var(--warm-200); color: var(--warm-600); }
+  .tab.active { background: var(--warm-400); color: #fff; border-color: var(--warm-400); font-weight: 500; }
+  .count-badge { font-size: 12px; color: var(--text-muted); margin-left: 4px; }
+  .add-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500;
+    padding: 7px 18px;
+    border-radius: 22px;
+    border: 1.5px solid var(--warm-400);
+    background: var(--white);
+    color: var(--warm-600);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .add-btn:hover { background: var(--warm-400); color: #fff; }
+  .add-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+  /* ── GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── CARD ── */
+  .msg-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.2rem 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .msg-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    border-radius: 16px 0 0 16px;
+  }
+  .msg-card.c-warm::before { background: var(--warm-400); }
+  .msg-card.c-rose::before { background: #E08888; }
+  .msg-card.c-sage::before { background: #72A890; }
+  .msg-card.c-slate::before { background: #7A9AC0; }
+  .msg-card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+  .card-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .av-warm { background: #FAE8D0; color: #7A4F2C; }
+  .av-rose { background: #FAE0E0; color: #7A3030; }
+  .av-sage { background: #D8F0E8; color: #2A6050; }
+  .av-slate { background: #D8E8FA; color: #2A4070; }
+
+  .card-name { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+  .card-role { font-size: 11px; color: var(--text-muted); margin-bottom: 0.7rem; }
+  .card-msg { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+  .card-date { font-size: 10px; color: var(--text-muted); margin-top: 0.8rem; opacity: 0.8; }
+
+  /* ── ADD CARD ── */
+  .add-card {
+    background: transparent;
+    border: 1.5px dashed var(--border-hover);
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    min-height: 140px;
+    color: var(--text-muted);
+    font-size: 12px;
+    transition: all 0.18s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .add-card svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; opacity: 0.6; }
+  .add-card:hover { background: var(--warm-200); border-color: var(--warm-400); color: var(--warm-600); }
+
+  /* ── MODAL ── */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(40,20,10,0.35);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .overlay.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 24px 60px rgba(120,80,40,0.18);
+    animation: slideUp 0.22s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.4rem;
+  }
+  .modal label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    margin-top: 14px;
+  }
+  .modal label:first-of-type { margin-top: 0; }
+  .modal input, .modal textarea, .modal select {
+    width: 100%;
+    border: 1px solid var(--border-hover);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text-primary);
+    background: var(--warm-100);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .modal input:focus, .modal textarea:focus, .modal select:focus {
+    border-color: var(--warm-400);
+    background: #fff;
+  }
+  .modal textarea { height: 90px; resize: none; line-height: 1.65; }
+  .modal-btns { display: flex; gap: 8px; margin-top: 1.4rem; justify-content: flex-end; }
+  .btn-cancel {
+    font-size: 13px; padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-hover);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.15s;
+  }
+  .btn-cancel:hover { background: var(--warm-200); }
+  .btn-save {
+    font-size: 13px; padding: 8px 20px;
+    border-radius: 10px;
+    border: none;
+    background: var(--warm-400);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.15s;
+  }
+  .btn-save:hover { background: var(--warm-500); }
+
+  /* ── VIEW MODAL ── */
+  .view-modal-inner {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 24px 60px rgba(120,80,40,0.18);
+    animation: slideUp 0.22s ease;
+  }
+  .vc-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .vc-name { font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+  .vc-role { font-size: 13px; color: var(--text-muted); margin-bottom: 1.2rem; }
+  .vc-divider { height: 1px; background: var(--border); margin-bottom: 1.2rem; }
+  .vc-msg { font-size: 15px; line-height: 1.85; color: var(--text-primary); white-space: pre-line; }
+  .vc-date { font-size: 11px; color: var(--text-muted); margin-top: 1.2rem; }
+  .close-view { margin-top: 1.4rem; width: 100%; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    .toolbar { padding: 0.8rem 1rem; }
+    .cards-grid { padding: 1rem; gap: 12px; }
+    .hero { padding: 2.5rem 1.2rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-petal">🌸</span>
+  <div class="hero-badge">퇴임을 축하드립니다</div>
+  <h1>김상윤 실장님께</h1>
+  <p class="subtitle">오랜 시간 함께해주셔서 감사드리며,<br>제2의 인생의 출발을 응원합니다!</p>
+  <div class="hero-divider"></div>
+</div>
+
+<div class="toolbar">
+  <div class="tabs">
+    <button class="tab active" onclick="filterCards('all',this)">전체</button>
+    <button class="tab" onclick="filterCards('팀장급',this)">팀장급</button>
+    <button class="tab" onclick="filterCards('실무',this)">실무진</button>
+    <span class="count-badge" id="countBadge"></span>
+  </div>
+  <button class="add-btn" onclick="openModal()">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    메시지 남기기
+  </button>
+</div>
+
+<div class="cards-grid" id="cardsGrid"></div>
+
+<div class="footer">김상윤 실장님의 새 출발을 응원하는 마음을 담아 🌸</div>
+
+<!-- 메시지 등록 모달 -->
+<div class="overlay" id="addModal">
+  <div class="modal">
+    <h3>실장님께 메시지 남기기</h3>
+    <label>이름</label>
+    <input id="inp-name" placeholder="예) 홍길동" />
+    <label>직책</label>
+    <input id="inp-role" placeholder="예) 주임, 팀장, 사무관..." />
+    <label>소속 그룹</label>
+    <select id="inp-group">
+      <option value="팀장급">팀장급</option>
+      <option value="실무" selected>실무진</option>
+    </select>
+    <label>메시지</label>
+    <textarea id="inp-msg" placeholder="실장님께 전하고 싶은 마음을 적어주세요."></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">취소</button>
+      <button class="btn-save" onclick="saveCard()">등록하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 메시지 보기 모달 -->
+<div class="overlay" id="viewModal">
+  <div class="view-modal-inner">
+    <div class="vc-avatar av-warm" id="vc-av"></div>
+    <div class="vc-name" id="vc-name"></div>
+    <div class="vc-role" id="vc-role"></div>
+    <div class="vc-divider"></div>
+    <div class="vc-msg" id="vc-msg"></div>
+    <div class="vc-date" id="vc-date"></div>
+    <button class="btn-cancel close-view" onclick="closeView()">닫기</button>
+  </div>
+</div>
+
+<script>
+  // ── 초기 데이터 ──
+  let cards = [
+    {
+      name: "김응민",
+      role: "과장",
+      group: "팀장급",
+      msg: "신입 입사 초부터 퇴임까지 모실 수 있어서 너무나 큰 영광이었습니다.",
+      date: "2026.05.30",
+      color: "c-warm",
+      avClass: "av-warm"
+    }
+  ];
+
+  let currentFilter = 'all';
+  const COLOR_CYCLE = ['c-warm','c-rose','c-sage','c-slate'];
+  const AV_CYCLE    = ['av-warm','av-rose','av-sage','av-slate'];
+
+  function initials(name) {
+    return name.length >= 2 ? name.slice(-2) : name;
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('cardsGrid');
+    const filtered = currentFilter === 'all' ? cards : cards.filter(c => c.group === currentFilter);
+    document.getElementById('countBadge').textContent = `총 ${filtered.length}개의 메시지`;
+    grid.innerHTML = '';
+
+    filtered.forEach((c) => {
+      const el = document.createElement('div');
+      el.className = `msg-card ${c.color}`;
+      const preview = c.msg.length > 72 ? c.msg.slice(0, 72) + '…' : c.msg;
+      el.innerHTML = `
+        <div class="card-avatar ${c.avClass}">${initials(c.name)}</div>
+        <div class="card-name">${c.name}</div>
+        <div class="card-role">${c.role}</div>
+        <div class="card-msg">${preview}</div>
+        <div class="card-date">${c.date}</div>
+      `;
+      const idx = cards.indexOf(c);
+      el.onclick = () => openView(idx);
+      grid.appendChild(el);
+    });
+
+    const addEl = document.createElement('button');
+    addEl.className = 'add-card';
+    addEl.innerHTML = `
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span>메시지 남기기</span>
+    `;
+    addEl.onclick = openModal;
+    grid.appendChild(addEl);
+  }
+
+  function filterCards(group, btn) {
+    currentFilter = group;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderCards();
+  }
+
+  function openModal() { document.getElementById('addModal').classList.add('open'); }
+  function closeModal() {
+    document.getElementById('addModal').classList.remove('open');
+    ['inp-name','inp-role','inp-msg'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  function saveCard() {
+    const name = document.getElementById('inp-name').value.trim();
+    const role = document.getElementById('inp-role').value.trim();
+    const group = document.getElementById('inp-group').value;
+    const msg  = document.getElementById('inp-msg').value.trim();
+    if (!name || !msg) { alert('이름과 메시지를 입력해주세요.'); return; }
+    const idx  = cards.length % 4;
+    const today = new Date();
+    const date  = `${today.getFullYear()}.${String(today.getMonth()+1).padStart(2,'0')}.${String(today.getDate()).padStart(2,'0')}`;
+    cards.push({ name, role: role || '동료', group, msg, date, color: COLOR_CYCLE[idx], avClass: AV_CYCLE[idx] });
+    closeModal();
+    renderCards();
+  }
+
+  function openView(i) {
+    const c = cards[i];
+    const av = document.getElementById('vc-av');
+    av.textContent = initials(c.name);
+    av.className = `vc-avatar ${c.avClass}`;
+    document.getElementById('vc-name').textContent = c.name;
+    document.getElementById('vc-role').textContent = c.role;
+    document.getElementById('vc-msg').textContent  = c.msg;
+    document.getElementById('vc-date').textContent = c.date;
+    document.getElementById('viewModal').classList.add('open');
+  }
+  function closeView() { document.getElementById('viewModal').classList.remove('open'); }
+
+  // 모달 외부 클릭 시 닫기
+  document.getElementById('addModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.getElementById('viewModal').addEventListener('click', function(e) {
+    if (e.target === this) closeView();
+  });
+
+  renderCards();
+</script>
+</body>
+</html>
